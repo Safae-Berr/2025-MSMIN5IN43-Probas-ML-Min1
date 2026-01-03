@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# 🛡️ FactGuard - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Le frontend de **FactGuard** est une application web moderne conçue pour la détection de fake news assistée par IA. L'interface est optimisée pour la clarté, la performance et l'accessibilité.
 
-Currently, two official plugins are available:
+## 🚀 Technologies utilisées
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Framework :** [React](https://reactjs.org/) avec [TypeScript](https://www.typescriptlang.org/)
+* **Build Tool :** [Vite](https://vitejs.dev/)
+* **Styling :** [Tailwind CSS v3](https://tailwindcss.com/)
+* **Composants UI :** [shadcn/ui](https://ui.shadcn.com/) (basé sur Radix UI)
+* **Animations :** [Lucide React](https://lucide.dev/) pour les icônes et `tailwindcss-animate`
+* **Polices :** [Fontsource](https://fontsource.org/) (Crimson Pro & DM Sans)
 
-## React Compiler
+## 📦 Installation et démarrage
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Assurez-vous d'avoir [Node.js](https://nodejs.org/) installé sur votre machine.
 
-## Expanding the ESLint configuration
+1.  **Cloner le dépôt :**
+    ```bash
+    git clone <url-du-repo>
+    cd frontend
+    ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2.  **Installer les dépendances :**
+    ```bash
+    npm install
+    ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+3.  **Lancer le serveur de développement :**
+    ```bash
+    npm run dev
+    ```
+    L'application sera disponible sur `http://localhost:5173`.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🎨 Design System
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+L'application utilise une palette de couleurs spécifique définie via des variables CSS dans `src/index.css` :
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* **Accent (Aqua/Turquoise) :** Utilisé pour les éléments clés et le branding (Fake News).
+* **Primary (Deep Blue) :** Utilisé pour les boutons d'action principaux.
+* **Reliable / Unreliable :** Codes couleurs (Vert/Rouge) pour les indicateurs de score de fiabilité.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📂 Structure du projet
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```text
+src/
+├── components/     # Composants réutilisables (Boutons, Cards, Navbar)
+├── pages/          # Pages de l'application (Index, Analyzer, etc.)
+├── lib/            # Configuration utilitaire (utils.ts pour tailwind-merge)
+├── hooks/          # Hooks React personnalisés
+├── index.css       # Styles globaux et variables CSS
+├── main.tsx        # Point d'entrée de l'application
+└── tailwind.config.ts # Configuration avancée de Tailwind
