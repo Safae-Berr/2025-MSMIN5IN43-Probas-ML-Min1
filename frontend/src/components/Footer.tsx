@@ -14,8 +14,8 @@ const Footer = () => {
               <span className="font-display text-xl font-bold text-foreground">FactGuard</span>
             </Link>
             <p className="mt-4 max-w-md text-sm text-muted-foreground">
-              Détection intelligente de fake news basée sur les dernières avancées en intelligence artificielle. Protégez-vous contre la désinformation.
-            </p>
+            Propulsé par les architectures <strong className="text-foreground font-medium">CamemBERT</strong> et <strong className="text-foreground font-medium">RoBERTa</strong>. 
+            Notre moteur NLP analyse les structures sémantiques pour identifier les patterns de désinformation en temps réel.            </p>
           </div>
 
           <div>
@@ -43,12 +43,12 @@ const Footer = () => {
             <h4 className="font-semibold text-foreground">Légal</h4>
             <ul className="mt-4 space-y-2">
               <li>
-                <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href="/comment-ca-marche" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                   Confidentialité
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href="/documentation" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                   Conditions d'utilisation
                 </a>
               </li>
@@ -56,16 +56,14 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-          <p className="text-sm text-muted-foreground">© 2026 FactGuard. Tous droits réservés.</p>
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-              <Github className="h-5 w-5" />
-            </a>
-            <a href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-              <Twitter className="h-5 w-5" />
-            </a>
-          </div>
+        {/* Section du bas centrée et adaptée au back */}
+        <div className="mt-12 border-t pt-8 flex flex-col items-center gap-2">
+          <p className="text-sm text-muted-foreground font-medium">
+            © 2026 FactGuard <span className="mx-2 text-accent">|</span> <span className="italic">Intelligence Artificielle au service de la vérité.</span>
+          </p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">
+            Modèles d'inférence haute performance (FR/EN)
+          </p>
         </div>
       </div>
     </footer>

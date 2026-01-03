@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, Users, Target, Award, Heart, Lightbulb } from "lucide-react";
+import { ArrowLeft, Shield, Users, Target, Award, Lightbulb, Globe2, Cpu } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,57 +7,52 @@ import Footer from "@/components/Footer";
 const About = () => {
   const values = [
     {
+      icon: Cpu,
+      title: "Précision Technique",
+      description: "Utilisation de modèles Transformers (CamemBERT, BERT, RoBERTa) pour une analyse fine du langage.",
+    },
+    {
+      icon: Globe2,
+      title: "Multilinguisme",
+      description: "Une approche dédiée pour traiter les spécificités linguistiques du français et de l'anglais.",
+    },
+    {
       icon: Shield,
-      title: "Intégrité",
-      description: "Nous nous engageons à fournir des analyses objectives et transparentes, sans biais politique ou commercial.",
+      title: "Objectivité IA",
+      description: "Des algorithmes entraînés pour détecter les patterns de désinformation sans biais humain.",
     },
     {
       icon: Lightbulb,
-      title: "Innovation",
-      description: "Nous utilisons les dernières avancées en IA et NLP pour améliorer continuellement notre détection.",
-    },
-    {
-      icon: Users,
-      title: "Accessibilité",
-      description: "Notre outil est gratuit et accessible à tous, car la lutte contre la désinformation est l'affaire de chacun.",
-    },
-    {
-      icon: Heart,
-      title: "Éducation",
-      description: "Au-delà de la détection, nous souhaitons éduquer le public aux mécanismes de la désinformation.",
+      title: "Innovation Open",
+      description: "Exploitation des dernières recherches en NLP pour rester à la pointe de la détection.",
     },
   ];
 
   const team = [
     {
-      name: "Dr. Marie Laurent",
-      role: "Directrice Scientifique",
-      bio: "Experte en NLP avec 15 ans d'expérience, ancienne chercheuse au CNRS.",
+      name: "Développeur IA",
+      role: "Architecte NLP & Backend",
+      bio: "Expert en fine-tuning des modèles Transformers. Gère l'architecture du serveur et l'inférence des modèles de détection.",
     },
     {
-      name: "Thomas Dubois",
-      role: "Lead Developer IA",
-      bio: "Spécialiste des transformers et du deep learning appliqué au texte.",
+      name: "Développeur Frontend",
+      role: "Architecte UI/UX",
+      bio: "Responsable de l'interface utilisateur sous React. Spécialiste de la visualisation de données et de l'expérience utilisateur.",
     },
     {
-      name: "Sophie Martin",
-      role: "Journaliste & Fact-checker",
-      bio: "10 ans d'expérience en fact-checking, ancienne AFP Factuel.",
-    },
-    {
-      name: "Alexandre Chen",
-      role: "Data Scientist",
-      bio: "Expert en analyse de données et en détection de patterns.",
+      name: "Data Scientist",
+      role: "Analyste de Données",
+      bio: "En charge de la collecte et du nettoyage des datasets d'entraînement ainsi que de l'évaluation de la précision statistique.",
     },
   ];
 
   const partners = [
-    "AFP Factuel",
-    "Les Décodeurs",
-    "CheckNews",
-    "CNRS",
-    "Université Paris-Saclay",
-    "CrossCheck",
+    "Hugging Face",
+    "PyTorch",
+    "Tailwind CSS",
+    "React Router",
+    "Lucide Icons",
+    "Framer Motion",
   ];
 
   return (
@@ -82,18 +77,20 @@ const About = () => {
               transition={{ duration: 0.5 }}
               className="max-w-3xl"
             >
-              <h1 className="font-display text-4xl font-bold text-foreground md:text-5xl">À propos de FactGuard</h1>
+              <h1 className="font-display text-4xl font-bold text-foreground md:text-5xl">
+                À propos de <span className="text-accent">FactGuard</span>
+              </h1>
               <p className="mt-6 text-lg text-muted-foreground">
-                FactGuard est né d'une conviction simple : dans un monde saturé d'informations, chaque citoyen devrait avoir accès à des outils pour distinguer le vrai du faux.
+                FactGuard est une plateforme d'analyse hybride née de la nécessité de protéger l'intégrité de l'information à l'ère du numérique. 
               </p>
               <p className="mt-4 text-lg text-muted-foreground">
-                Notre mission est de démocratiser l'accès aux technologies de fact-checking en utilisant l'intelligence artificielle pour aider le public à naviguer dans le paysage médiatique moderne.
+                Notre technologie repose sur une architecture multi-modèles permettant d'analyser les contenus en français et en anglais avec une précision chirurgicale grâce aux architectures Transformers.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* Mission */}
+        {/* Mission Section */}
         <section className="py-16 md:py-24">
           <div className="container">
             <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
@@ -102,22 +99,19 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-sm text-accent">
+                <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-sm text-accent font-medium">
                   <Target className="h-4 w-4" />
-                  Notre mission
+                  Notre mission technique
                 </div>
                 <h2 className="mt-6 font-display text-3xl font-bold text-foreground">
-                  Lutter contre la désinformation par la technologie
+                  Démocratiser la vérification par l'Intelligence Artificielle
                 </h2>
-                <div className="mt-6 space-y-4 text-muted-foreground">
+                <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    La désinformation représente aujourd'hui l'un des plus grands défis de notre société numérique. Elle affecte nos démocraties, notre santé publique et notre cohésion sociale.
+                    La désinformation évolue vite. FactGuard utilise le <strong>Deep Learning</strong> pour comprendre le contexte, le ton et les subtilités d'un texte.
                   </p>
                   <p>
-                    Face à ce constat, nous avons décidé de mettre l'intelligence artificielle au service de la vérité. FactGuard combine les dernières avancées en traitement du langage naturel avec l'expertise de journalistes et fact-checkers professionnels.
-                  </p>
-                  <p>
-                    Notre objectif n'est pas de remplacer le jugement humain, mais de l'augmenter. Nous fournissons des outils pour aider chacun à développer son esprit critique face à l'information.
+                    En proposant des modèles spécifiques comme <strong>CamemBERT</strong> pour le français et <strong>BERT/RoBERTa</strong> pour l'anglais, nous respectons les nuances sémantiques propres à chaque langue.
                   </p>
                 </div>
               </motion.div>
@@ -126,18 +120,18 @@ const About = () => {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="grid grid-cols-2 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
               >
-                {values.map((value, index) => (
+                {values.map((value) => (
                   <div
                     key={value.title}
-                    className="rounded-xl border bg-card p-6"
+                    className="rounded-xl border bg-card p-6 shadow-sm hover:shadow-md transition-shadow"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 text-accent">
                       <value.icon className="h-5 w-5" />
                     </div>
                     <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{value.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{value.description}</p>
+                    <p className="mt-2 text-sm text-muted-foreground leading-tight">{value.description}</p>
                   </div>
                 ))}
               </motion.div>
@@ -145,7 +139,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* Team */}
+        {/* Team - Configuration pour 3 personnes */}
         <section className="border-t bg-muted/30 py-16 md:py-24">
           <div className="container">
             <motion.div
@@ -156,11 +150,11 @@ const About = () => {
             >
               <h2 className="font-display text-3xl font-bold text-foreground">Notre équipe</h2>
               <p className="mt-3 text-muted-foreground">
-                Des experts pluridisciplinaires unis par une même cause
+                Trois profils complémentaires unis pour une information plus fiable.
               </p>
             </motion.div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
               {team.map((member, index) => (
                 <motion.div
                   key={member.name}
@@ -168,21 +162,23 @@ const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="rounded-xl border bg-card p-6 text-center"
+                  className="rounded-xl border bg-card p-8 text-center hover:border-accent/30 transition-all hover:shadow-md"
                 >
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-accent/10 text-accent mb-4">
                     <Users className="h-10 w-10" />
                   </div>
-                  <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{member.name}</h3>
-                  <p className="text-sm font-medium text-accent">{member.role}</p>
-                  <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>
+                  <h3 className="font-display text-xl font-bold text-foreground">{member.name}</h3>
+                  <p className="text-xs font-bold uppercase tracking-wider text-accent mt-1">{member.role}</p>
+                  <p className="mt-4 text-sm text-muted-foreground leading-relaxed italic italic">
+                    "{member.bio}"
+                  </p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Partners */}
+        {/* Tech Stack */}
         <section className="py-16 md:py-24">
           <div className="container">
             <motion.div
@@ -191,22 +187,19 @@ const About = () => {
               viewport={{ once: true }}
               className="text-center"
             >
-              <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-sm text-accent">
+              <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-sm text-accent font-medium">
                 <Award className="h-4 w-4" />
-                Nos partenaires
+                Technologies utilisées
               </div>
               <h2 className="mt-6 font-display text-3xl font-bold text-foreground">
-                Ils nous font confiance
+                Propulsé par les standards de l'industrie
               </h2>
-              <p className="mt-3 text-muted-foreground">
-                FactGuard collabore avec des organisations de référence en fact-checking
-              </p>
-
-              <div className="mt-12 flex flex-wrap items-center justify-center gap-8">
+              
+              <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
                 {partners.map((partner) => (
                   <div
                     key={partner}
-                    className="rounded-lg border bg-card px-6 py-4 text-lg font-medium text-muted-foreground"
+                    className="rounded-lg border bg-card px-8 py-4 text-sm font-bold text-muted-foreground hover:text-accent hover:border-accent/50 transition-all cursor-default"
                   >
                     {partner}
                   </div>
@@ -225,13 +218,13 @@ const About = () => {
               viewport={{ once: true }}
               className="mx-auto max-w-2xl text-center"
             >
-              <h2 className="font-display text-3xl font-bold">Vous souhaitez collaborer ?</h2>
+              <h2 className="font-display text-3xl font-bold">Plus d'informations sur les modèles ?</h2>
               <p className="mt-4 text-primary-foreground/80">
-                Médias, chercheurs, organisations : contactez-nous pour explorer les possibilités de partenariat.
+                Vous êtes chercheur ou développeur ? Contactez-nous pour en savoir plus sur l'architecture de nos modèles.
               </p>
               <a
                 href="mailto:contact@factguard.app"
-                className="mt-8 inline-flex h-12 items-center justify-center rounded-lg bg-primary-foreground px-8 font-medium text-primary transition-colors hover:bg-primary-foreground/90"
+                className="mt-8 inline-flex h-12 items-center justify-center rounded-lg bg-primary-foreground px-8 font-bold text-primary transition-all hover:scale-105 active:scale-95 shadow-lg"
               >
                 Nous contacter
               </a>

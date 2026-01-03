@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, FileText, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom"; // Assure-toi que react-router-dom est installé
+import { Search, FileText, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
@@ -25,8 +25,16 @@ const Index = () => {
   const [inputValue, setInputValue] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResultType>(null);
+  
+  // État pour le modèle sélectionné
+  const [selectedModel, setSelectedModel] = useState("camembert");
 
-  // Fonction pour faire défiler jusqu'à la zone d'analyse
+  const models = [
+    { id: "camembert", name: "CamemBERT", lang: "Français", icon: "🇫🇷" },
+    { id: "bert", name: "BERT", lang: "English", icon: "🇬🇧" },
+    { id: "roberta", name: "RoBERTa", lang: "English", icon: "🇺🇸" },
+  ];
+
   const scrollToAnalyzer = () => {
     const element = document.getElementById("analyzer");
     if (element) {
@@ -40,36 +48,40 @@ const Index = () => {
     setIsAnalyzing(true);
     setResult(null);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    try {
+      // REMPLACEZ l'URL par celle de votre API Python (ex: http://127.0.0.1:5000/predict)
+      /*
+      const response = await fetch("VOTRE_URL_BACKEND/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          text: inputValue, 
+          model: selectedModel 
+        }),
+      });
+      const data = await response.json();
+      setResult(data);
+      */
 
-    const mockResults: AnalysisResultType[] = [
-      {
-        isReliable: true,
-        confidence: 87,
+      // Simulation pour la démonstration
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const mockResult: AnalysisResultType = {
+        isReliable: Math.random() > 0.5,
+        confidence: 85,
         factors: {
-          style: { score: 92, label: "Professionnel" },
-          vocabulary: { score: 85, label: "Factuel" },
-          source: { score: 84, label: "Établie" },
+          style: { score: 88, label: "Analysé" },
+          vocabulary: { score: 75, label: "Vérifié" },
+          source: { score: 80, label: "Évalué" },
         },
-        summary:
-          "Cet article présente un style journalistique professionnel avec des sources citées et un vocabulaire factuel. Les marqueurs typiques de désinformation sont absents.",
-      },
-      {
-        isReliable: false,
-        confidence: 78,
-        factors: {
-          style: { score: 35, label: "Sensationnaliste" },
-          vocabulary: { score: 28, label: "Émotionnel" },
-          source: { score: 42, label: "Non vérifiée" },
-        },
-        summary:
-          "L'article contient plusieurs indicateurs de contenu trompeur : titres sensationnalistes, vocabulaire chargé émotionnellement et sources non vérifiables.",
-      },
-    ];
-
-    setResult(mockResults[Math.random() > 0.5 ? 0 : 1]);
-    setIsAnalyzing(false);
+        summary: `Analyse effectuée avec succès via le modèle ${selectedModel.toUpperCase()}.`,
+      };
+      setResult(mockResult);
+      
+    } catch (error) {
+      console.error("Erreur lors de l'appel API", error);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   return (
@@ -79,28 +91,17 @@ const Index = () => {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 md:py-32">
-          {/* Background gradient */}
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage: "var(--gradient-hero)",
-            }}
-          />
+          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "var(--gradient-hero)" }} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent" />
 
-          <div className="container relative">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mx-auto max-w-3xl text-center"
-            >
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-1.5 text-sm">
+          <div className="container relative text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mx-auto max-w-3xl">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-1.5 text-sm font-medium">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-reliable opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-reliable" />
                 </span>
-                Propulsé par BERT/RoBERTa
+                Multi-modèles : CamemBERT, BERT & RoBERTa
               </div>
 
               <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
@@ -112,23 +113,15 @@ const Index = () => {
                 identifier les contenus trompeurs avec précision.
               </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-              >
-                {/* ACTION: Scroll vers l'analyseur */}
+              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                 <Button variant="hero" size="xl" onClick={scrollToAnalyzer}>
                   Commencer l'analyse
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                
-                {/* ACTION: Lien vers la page à propos */}
                 <Button variant="outline" size="xl" asChild>
                   <Link to="/comment-ca-marche">En savoir plus</Link>
                 </Button>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -136,86 +129,75 @@ const Index = () => {
         {/* Features Section */}
         <section className="border-y bg-muted/30 py-16">
           <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="mb-12 text-center"
-            >
-              <h2 className="font-display text-3xl font-bold text-foreground">Comment ça fonctionne</h2>
-              <p className="mt-3 text-muted-foreground">
-                Une analyse multi-dimensionnelle pour une détection fiable
-              </p>
-            </motion.div>
             <FeatureCards />
           </div>
         </section>
 
         {/* Analyzer Section */}
         <section id="analyzer" className="py-16 md:py-24 scroll-mt-20">
-          <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="mx-auto max-w-3xl"
-            >
-              <div className="mb-8 text-center">
-                <h2 className="font-display text-3xl font-bold text-foreground">Analysez votre article</h2>
-                <p className="mt-3 text-muted-foreground">
-                  Collez le texte de l'article pour lancer l'analyse
-                </p>
-              </div>
+          <div className="container max-w-3xl mx-auto">
+            <div className="mb-8 text-center">
+              <h2 className="font-display text-3xl font-bold text-foreground">Analysez votre article</h2>
+              <p className="mt-3 text-muted-foreground">Sélectionnez un modèle et collez votre texte de l'article pour lancer l'analyse</p>
+            </div>
 
-              {/* Petit indicateur de type (statique maintenant) */}
-              <div className="mb-6 flex justify-center">
-                <div className="inline-flex rounded-lg border bg-muted p-1">
-                  <div className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium bg-card text-foreground shadow-sm">
-                    <FileText className="h-4 w-4" />
-                    Contenu du texte
-                  </div>
-                </div>
-              </div>
-
-              {/* Input Area */}
-              <div className="rounded-2xl border bg-card p-6 shadow-soft">
-                <Textarea
-                  placeholder="Collez le texte de l'article ici..."
-                  className="min-h-[200px] border-0 bg-transparent text-base focus-visible:ring-0 focus-visible:ring-offset-0"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                />
-
-                <div className="mt-4 flex items-center justify-between border-t pt-4">
-                  <p className="text-sm text-muted-foreground">
-                    {inputValue.length} caractères
-                  </p>
-                  <Button
-                    variant="hero"
-                    size="lg"
-                    onClick={handleAnalyze}
-                    disabled={!inputValue.trim() || isAnalyzing}
+            {/* SÉLECTEUR DE MODÈLE */}
+            <div className="mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {models.map((model) => (
+                  <button
+                    key={model.id}
+                    onClick={() => setSelectedModel(model.id)}
+                    className={`relative flex flex-col items-center p-4 rounded-xl border-2 transition-all ${
+                      selectedModel === model.id
+                        ? "border-accent bg-accent/5 shadow-md"
+                        : "border-border bg-card hover:border-accent/40"
+                    }`}
                   >
-                    {isAnalyzing ? (
-                      "Analyse en cours..."
-                    ) : (
-                      <>
-                        <Search className="mr-2 h-4 w-4" />
-                        Analyser
-                      </>
+                    {selectedModel === model.id && (
+                      <CheckCircle2 className="absolute top-2 right-2 h-4 w-4 text-accent" />
                     )}
-                  </Button>
-                </div>
+                    <span className="text-2xl mb-1">{model.icon}</span>
+                    <span className="font-bold text-sm">{model.name}</span>
+                    <span className="text-xs text-muted-foreground">{model.lang}</span>
+                  </button>
+                ))}
               </div>
+            </div>
 
-              {/* Results Area */}
-              <div className="mt-8">
-                {isAnalyzing && <AnalysisLoader />}
-                {result && !isAnalyzing && <AnalysisResult result={result} />}
+            {/* Input Area */}
+            <div className="rounded-2xl border bg-card p-6 shadow-soft transition-all focus-within:ring-2 focus-within:ring-accent/20">
+              <div className="flex items-center gap-2 mb-4 text-accent">
+                <FileText className="h-5 w-5" />
+                <span className="text-sm font-semibold uppercase tracking-wider">Texte à analyser</span>
               </div>
-            </motion.div>
+              
+              <Textarea
+                placeholder="Collez le texte ici..."
+                className="min-h-[220px] border-0 bg-transparent text-base focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+
+              <div className="mt-4 flex items-center justify-between border-t pt-4">
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-medium text-foreground">{inputValue.length}</span> caractères
+                </p>
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={handleAnalyze}
+                  disabled={!inputValue.trim() || isAnalyzing}
+                >
+                  {isAnalyzing ? "Analyse en cours..." : "Lancer l'IA"}
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              {isAnalyzing && <AnalysisLoader />}
+              {result && !isAnalyzing && <AnalysisResult result={result} />}
+            </div>
           </div>
         </section>
 
@@ -231,8 +213,7 @@ const Index = () => {
             >
               <h2 className="font-display text-3xl font-bold">Luttez contre la désinformation</h2>
               <p className="mt-4 text-primary-foreground/80">
-                Rejoignez des milliers d'utilisateurs qui utilisent FactGuard pour vérifier leurs sources
-                d'information et combattre les fake news.
+              FactGuard utilise la puissance de CamemBERT et BERT pour assurer une information vérifiée. Rejoignez-nous dans la lutte contre les fake news dès aujourd'hui !
               </p>
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                 {/* ACTION: Scroll vers le haut (analyseur) */}
