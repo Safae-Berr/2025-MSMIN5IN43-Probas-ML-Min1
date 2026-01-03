@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, FileText, Link2, ArrowRight } from "lucide-react";
+import { Search, FileText, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom"; // Assure-toi que react-router-dom est installé
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
@@ -21,10 +22,17 @@ type AnalysisResultType = {
 } | null;
 
 const Index = () => {
-  const [inputType, setInputType] = useState<"text" | "url">("text");
   const [inputValue, setInputValue] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResultType>(null);
+
+  // Fonction pour faire défiler jusqu'à la zone d'analyse
+  const scrollToAnalyzer = () => {
+    const element = document.getElementById("analyzer");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const handleAnalyze = async () => {
     if (!inputValue.trim()) return;
@@ -32,10 +40,9 @@ const Index = () => {
     setIsAnalyzing(true);
     setResult(null);
 
-    // Simulate API call - in production this would call your BERT/RoBERTa model
+    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    // Mock result for demonstration
     const mockResults: AnalysisResultType[] = [
       {
         isReliable: true,
@@ -111,12 +118,15 @@ const Index = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
               >
-                <Button variant="hero" size="xl" onClick={() => document.getElementById("analyzer")?.scrollIntoView({ behavior: "smooth" })}>
+                {/* ACTION: Scroll vers l'analyseur */}
+                <Button variant="hero" size="xl" onClick={scrollToAnalyzer}>
                   Commencer l'analyse
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button variant="outline" size="xl">
-                  En savoir plus
+                
+                {/* ACTION: Lien vers la page à propos */}
+                <Button variant="outline" size="xl" asChild>
+                  <Link to="/comment-ca-marche">En savoir plus</Link>
                 </Button>
               </motion.div>
             </motion.div>
@@ -143,7 +153,7 @@ const Index = () => {
         </section>
 
         {/* Analyzer Section */}
-        <section id="analyzer" className="py-16 md:py-24">
+        <section id="analyzer" className="py-16 md:py-24 scroll-mt-20">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -155,62 +165,32 @@ const Index = () => {
               <div className="mb-8 text-center">
                 <h2 className="font-display text-3xl font-bold text-foreground">Analysez votre article</h2>
                 <p className="mt-3 text-muted-foreground">
-                  Collez le texte de l'article ou entrez son URL pour lancer l'analyse
+                  Collez le texte de l'article pour lancer l'analyse
                 </p>
               </div>
 
-              {/* Input Type Toggle */}
+              {/* Petit indicateur de type (statique maintenant) */}
               <div className="mb-6 flex justify-center">
                 <div className="inline-flex rounded-lg border bg-muted p-1">
-                  <button
-                    onClick={() => setInputType("text")}
-                    className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-all ${
-                      inputType === "text"
-                        ? "bg-card text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
+                  <div className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium bg-card text-foreground shadow-sm">
                     <FileText className="h-4 w-4" />
-                    Texte
-                  </button>
-                  <button
-                    onClick={() => setInputType("url")}
-                    className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-all ${
-                      inputType === "url"
-                        ? "bg-card text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <Link2 className="h-4 w-4" />
-                    URL
-                  </button>
+                    Contenu du texte
+                  </div>
                 </div>
               </div>
 
               {/* Input Area */}
               <div className="rounded-2xl border bg-card p-6 shadow-soft">
-                {inputType === "text" ? (
-                  <Textarea
-                    placeholder="Collez le texte de l'article ici..."
-                    className="min-h-[200px] border-0 bg-transparent text-base focus-visible:ring-0 focus-visible:ring-offset-0"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                ) : (
-                  <input
-                    type="url"
-                    placeholder="https://exemple.com/article"
-                    className="w-full border-0 bg-transparent py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                )}
+                <Textarea
+                  placeholder="Collez le texte de l'article ici..."
+                  className="min-h-[200px] border-0 bg-transparent text-base focus-visible:ring-0 focus-visible:ring-offset-0"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
 
                 <div className="mt-4 flex items-center justify-between border-t pt-4">
                   <p className="text-sm text-muted-foreground">
-                    {inputType === "text"
-                      ? `${inputValue.length} caractères`
-                      : "L'URL sera analysée automatiquement"}
+                    {inputValue.length} caractères
                   </p>
                   <Button
                     variant="hero"
@@ -255,10 +235,12 @@ const Index = () => {
                 d'information et combattre les fake news.
               </p>
               <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                {/* ACTION: Scroll vers le haut (analyseur) */}
                 <Button
                   variant="secondary"
                   size="xl"
                   className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+                  onClick={scrollToAnalyzer}
                 >
                   Commencer gratuitement
                 </Button>
@@ -266,8 +248,9 @@ const Index = () => {
                   variant="ghost"
                   size="xl"
                   className="text-primary-foreground hover:bg-primary-foreground/10"
+                  asChild
                 >
-                  Voir la documentation
+                  <Link to="/documentation">Voir la documentation</Link>
                 </Button>
               </div>
             </motion.div>
@@ -277,7 +260,6 @@ const Index = () => {
 
       <Footer />
     </div>
-    
   );
 };
 

@@ -92,9 +92,9 @@ const Documentation = () => {
                     </p>
 
                     <div className="space-y-4">
-                      <h3 className="font-display text-lg font-semibold text-foreground">1. Choisir le mode d'entrée</h3>
+                      <h3 className="font-display text-lg font-semibold text-foreground">1. Faire entrée du contenu</h3>
                       <p>
-                        Vous pouvez soit coller directement le <strong className="text-foreground">texte</strong> de l'article, soit entrer son <strong className="text-foreground">URL</strong> pour une extraction automatique.
+                        Vous pouvez  coller directement le <strong className="text-foreground">texte</strong> de l'article pour l'analyser
                       </p>
                     </div>
 
